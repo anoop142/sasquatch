@@ -147,7 +147,7 @@ diff --strip-trailing-cr -NBbaur squashfs-tools/error.h squashfs-tools-patched/e
  
 -#ifdef SQUASHFS_TRACE
 +// CJH: Updated so that TRACE prints if -verbose is specified on the command line
-+int verbose;
++extern int verbose;
 +//#ifdef SQUASHFS_TRACE
  #define TRACE(s, args...) \
  		do { \
@@ -38303,16 +38303,15 @@ diff --strip-trailing-cr -NBbaur squashfs-tools/squashfs_fs.h squashfs-tools-pat
 diff --strip-trailing-cr -NBbaur squashfs-tools/unsquashfs.c squashfs-tools-patched/unsquashfs.c
 --- squashfs-tools/unsquashfs.c	2016-08-25 09:06:22.983529595 -0400
 +++ squashfs-tools-patched/unsquashfs.c	2016-08-25 09:06:03.223530354 -0400
-@@ -32,7 +32,8 @@
- #include "stdarg.h"
-
+@@ -33,6 +33,7 @@
+ 
  #include <sys/sysinfo.h>
  #include <sys/types.h>
 +#include <sys/sysmacros.h>
  #include <sys/time.h>
  #include <sys/resource.h>
  #include <limits.h>
-@@ -44,13 +44,19 @@
+@@ -44,13 +45,22 @@
  pthread_mutex_t	fragment_mutex;
  
  /* user options that control parallelisation */
@@ -38321,6 +38320,9 @@ diff --strip-trailing-cr -NBbaur squashfs-tools/unsquashfs.c squashfs-tools-patc
 +// CJH: Temporarily set the default processor count to 1 to prevent threading bug
 +//      until a proper fix is implemented.
 +int processors = 1;
++
++// CJH: Initialize verbosity to FALSE
++int verbose = FALSE;
  
  struct super_block sBlk;
  squashfs_operations s_ops;
